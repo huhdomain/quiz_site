@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문제풀기 - 퀴즈 사이트</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #e0f7fa; /* Light blue background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        .quiz-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            border: 1px solid #bbdefb; /* Light blue border */
+        }
+        .quiz-container h2 {
+            color: #01579b; /* Darker blue for heading */
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        .question-card {
+            background-color: #f0f8ff; /* Very light blue for question card */
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #90caf9; /* Medium blue border */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        .question-card h3 {
+            color: #01579b;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        .options-list .form-check {
+            margin-bottom: 15px;
+            text-align: left;
+            padding-left: 2.5em;
+        }
+        .options-list .form-check-input {
+            width: 1.25em;
+            height: 1.25em;
+            margin-top: 0.25em;
+            margin-left: -2em;
+            border-color: #4fc3f7;
+        }
+        .options-list .form-check-input:checked {
+            background-color: #03a9f4;
+            border-color: #03a9f4;
+        }
+        .options-list .form-check-label {
+            color: #333;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: #03a9f4; /* Primary blue for button */
+            border-color: #03a9f4;
+            border-radius: 25px; /* Rounded button */
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0288d1; /* Darker blue on hover */
+            border-color: #0288d1;
+        }
+        .progress-info {
+            color: #01579b;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2 class="mb-4">문제풀기</h2>
+        <div class="progress-info">
+            문제 {{ current_question_number }} / {{ total_questions }}
+        </div>
+        <form action="{{ url_for('quiz') }}" method="post">
+            <div class="question-card">
+                <h3>{{ question }}</h3>
+                <div class="options-list mt-4">
+                    {% for option in options %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="answer" id="option{{ loop.index }}" value="{{ option }}" required>
+                            <label class="form-check-label" for="option{{ loop.index }}">
+                                {{ option }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-50">
+                {% if is_last_question %}
+                    결과보기
+                {% else %}
+                    다음 문제
+                {% endif %}
+            </button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html> 

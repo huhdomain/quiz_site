@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결과보기 - 퀴즈 사이트</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #e0f7fa; /* Light blue background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        .result-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            border: 1px solid #bbdefb; /* Light blue border */
+        }
+        .result-container h2 {
+            color: #01579b; /* Darker blue for heading */
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        .score-info {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #01579b;
+            margin-bottom: 30px;
+        }
+        .question-result-card {
+            background-color: #f0f8ff; /* Very light blue for card */
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #90caf9; /* Medium blue border */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: left;
+        }
+        .question-result-card h4 {
+            color: #01579b;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        .question-result-card p {
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .question-result-card .correct {
+            color: #28a745; /* Green for correct */
+            font-weight: bold;
+        }
+        .question-result-card .incorrect {
+            color: #dc3545; /* Red for incorrect */
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #03a9f4; /* Primary blue for button */
+            border-color: #03a9f4;
+            border-radius: 25px; /* Rounded button */
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            margin-top: 20px;
+        }
+        .btn-primary:hover {
+            background-color: #0288d1; /* Darker blue on hover */
+            border-color: #0288d1;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h2>퀴즈 결과</h2>
+        <div class="score-info">
+            총 {{ total_questions }} 문제 중 {{ correct_count }} 문제 정답!
+        </div>
+        <div class="results-list">
+            {% for result in results %}
+                <div class="question-result-card">
+                    <h4>Q{{ loop.index }}. {{ result.question }}</h4>
+                    <p><strong>내 답변:</strong> <span class="{% if result.is_correct %}correct{% else %}incorrect{% endif %}">{{ result.user_answer }}</span></p>
+                    <p><strong>정답:</strong> <span class="correct">{{ result.correct_answer }}</span></p>
+                    <p><strong>설명:</strong> {{ result.explanation }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{{ url_for('quiz') }}" class="btn btn-primary">문제풀기 다시 시작</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html> 
